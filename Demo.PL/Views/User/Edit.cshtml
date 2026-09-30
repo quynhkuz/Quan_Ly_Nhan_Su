@@ -1,0 +1,61 @@
+@model UserViewModel
+
+@{
+    ViewData["Title"] = "Sửa người dùng";
+}
+
+<h1>Sửa thông tin người dùng</h1>
+
+<br />
+<br />
+
+<form asp-action="Edit" asp-route-id="@Model.Id">
+    <div asp-validation-summary="All"></div>
+
+    <input type="hidden" asp-for="Id" />
+
+    <div class="form-group">
+        <label class="col-form-lable" asp-for="UserName"></label>
+        <input asp-for="UserName" class="form-control" readonly />
+
+    </div>
+    <div class="form-group">
+        <label class="col-form-lable" asp-for="FName"></label>
+        <input asp-for="FName" class="form-control" />
+        <span asp-validation-for="FName" class="text-danger"></span>
+
+    </div>
+    <div class="form-group">
+        <label class="col-form-lable" asp-for="LName"></label>
+        <input asp-for="LName" class="form-control" />
+        <span asp-validation-for="LName" class="text-danger"></span>
+
+    </div>
+    <div class="form-group">
+        <label class="col-form-lable" asp-for="Email"></label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+
+    </div>
+    <div class="form-group">
+        <label class="col-form-lable" asp-for="PhoneNumber"></label>
+        <input asp-for="PhoneNumber" class="form-control" />
+        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+
+    </div>
+    <div class="form-group">
+        <label class="col-form-lable" asp-for="Role"></label>
+        <select asp-for="Role" asp-items="@ViewBag.RolesList" class="form-control">
+            <option value="">-- Chọn vai trò --</option>
+        </select>
+        <span asp-validation-for="Role" class="text-danger"></span>
+        <small class="form-text text-muted">
+            Chỉ quản trị viên mới thay đổi được vai trò của người dùng khác.
+        </small>
+
+    </div>
+
+    <input type="submit" value="Lưu" class="btn btn-primary" /> |
+    <a asp-action="Index" class="btn btn-light">Quay lại danh sách</a>
+
+</form>

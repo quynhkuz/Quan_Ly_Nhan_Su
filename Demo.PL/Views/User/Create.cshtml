@@ -1,0 +1,67 @@
+@model CreateUserViewModel
+
+@{
+    ViewData["Title"] = "Thêm người dùng";
+}
+
+<h1>Thêm người dùng mới</h1>
+
+<br />
+<br />
+
+<form asp-action="Create">
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    <div class="form-group">
+        <label class="col-form-lable" asp-for="FName"></label>
+        <input asp-for="FName" class="form-control" />
+        <span asp-validation-for="FName" class="text-danger"></span>
+
+    </div>
+    <div class="form-group">
+        <label class="col-form-lable" asp-for="LName"></label>
+        <input asp-for="LName" class="form-control" />
+        <span asp-validation-for="LName" class="text-danger"></span>
+
+    </div>
+    <div class="form-group">
+        <label class="col-form-lable" asp-for="Email"></label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+        <small class="form-text text-muted">Tên đăng nhập sẽ được đặt trùng với email.</small>
+
+    </div>
+    <div class="form-group">
+        <label class="col-form-lable" asp-for="PhoneNumber"></label>
+        <input asp-for="PhoneNumber" class="form-control" />
+        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+
+    </div>
+    <div class="form-group">
+        <label class="col-form-lable" asp-for="Role"></label>
+        <select asp-for="Role" asp-items="@ViewBag.RolesList" class="form-control">
+            <option value="">-- Chọn vai trò --</option>
+        </select>
+        <span asp-validation-for="Role" class="text-danger"></span>
+
+    </div>
+    <div class="form-group">
+        <label class="col-form-lable" asp-for="Password"></label>
+        <input asp-for="Password" class="form-control" />
+        <span asp-validation-for="Password" class="text-danger"></span>
+        <small class="form-text text-muted">
+            Mật khẩu phải có chữ hoa, chữ thường, chữ số và ký tự đặc biệt.
+        </small>
+
+    </div>
+    <div class="form-group">
+        <label class="col-form-lable" asp-for="ConfirmPassword"></label>
+        <input asp-for="ConfirmPassword" class="form-control" />
+        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+
+    </div>
+
+    <input type="submit" value="Thêm" class="btn btn-primary" /> |
+    <a asp-action="Index" class="btn btn-light">Quay lại danh sách</a>
+
+</form>

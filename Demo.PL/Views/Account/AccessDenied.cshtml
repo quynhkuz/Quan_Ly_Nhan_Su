@@ -1,0 +1,19 @@
+@{
+    ViewData["Title"] = "Không có quyền";
+}
+
+<h1>Không có quyền truy cập</h1>
+
+<br />
+<br />
+
+<div class="alert alert-danger">
+    <h4>Tài khoản của bạn không có quyền thực hiện thao tác này.</h4>
+    <p class="mb-0">
+        Chỉ quản trị viên (Admin) mới được thêm, sửa hoặc xoá người dùng.
+        Nếu bạn cần quyền này, hãy liên hệ quản trị viên của hệ thống.
+    </p>
+</div>
+
+<a asp-controller="Home" asp-action="Index" class="btn btn-primary">Về trang chủ</a>
+<a asp-controller="User" asp-action="Index" class="btn btn-light">Xem danh sách người dùng</a>

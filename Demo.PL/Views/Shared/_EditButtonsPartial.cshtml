@@ -1,0 +1,15 @@
+@model string
+
+@* Nút Sửa / Xoá cho phần Nhân viên và Phòng ban (Admin hoặc Editor). *@
+<td>
+    <a asp-action="Edit" asp-route-id="@Model" class="btn btn-success">
+        <i class="fas fa-edit"></i>
+        Sửa
+    </a>
+</td>
+<td>
+    <a asp-action="Delete" asp-route-id="@Model" class="btn btn-danger">
+        <i class="fas fa-trash"></i>
+        Xoá
+    </a>
+</td>

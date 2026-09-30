@@ -1,0 +1,31 @@
+﻿@model SignInViewModel
+@{
+    ViewData["Title"] = "Đăng nhập";
+    Layout = "~/Views/Shared/_AuthLayout.cshtml";
+}
+
+<div class="main-agileinfo">
+	<div class="agileits-top">
+		<form asp-action="SignIn">
+			<div asp-validation-summary="All"></div>
+			<input class="text email" asp-for="Email" placeholder="Email" required="">
+			<input class="text" asp-for="Password" placeholder="Mật khẩu" required="">
+			<br/>
+			<div class="wthree-text">
+				<label class="anim">
+					<input asp-for="RememberMe" class="checkbox">
+					<span>Ghi nhớ đăng nhập</span>
+				</label>
+				<div class="clear"> </div>
+			</div>
+			<input type="submit" value="ĐĂNG NHẬP">
+		</form>
+		<p>Chưa có tài khoản? <a asp-action="SignUp">Đăng ký ngay!</a></p>
+		<p> <a asp-action="ForgetPassword">Quên mật khẩu?</a></p>
+	</div>
+</div>
+
+
+@section ValidationScriptSection{
+	<partial name="_ValidationScriptsPartial" />
+}

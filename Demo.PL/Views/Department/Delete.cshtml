@@ -1,0 +1,29 @@
+﻿@model Department
+@{
+    ViewData["Title"] = "Xoá phòng ban";
+}
+
+<h1>Bạn có chắc muốn xoá phòng ban này?</h1>
+
+<form asp-action="Delete">
+    <div asp-validation-summary="All"></div>
+    <div class="form-group">
+        <label class="col-form-lable" asp-for="Code"></label>
+        <input asp-for="Code" class="form-control" readonly />
+
+    </div>
+    <div class="form-group">
+        <label class="col-form-lable" asp-for="Name"></label>
+        <input asp-for="Name" class="form-control" readonly />
+
+    </div>
+    <div class="form-group">
+        <label class="col-form-lable" asp-for="DateOfCreation"></label>
+        <input asp-for="DateOfCreation" class="form-control" readonly />
+
+    </div>
+
+    <input type="submit" value="Xoá" class="btn btn-danger" /> |
+    <a asp-action="Index" class="btn btn-secondary">Huỷ</a>
+
+</form>

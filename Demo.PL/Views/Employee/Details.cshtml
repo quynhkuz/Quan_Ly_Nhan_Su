@@ -1,0 +1,21 @@
+﻿@model EmployeeViewModel
+@{
+    ViewData["Title"] = "Chi tiết nhân viên";
+    var canEdit = User.CanEditContent();
+}
+
+<h1>Chi tiết nhân viên</h1>
+
+<br />
+<br />
+
+<div>
+
+    <partial name="PartialViews/DetailsDeleteEmpPartial" />
+    @if (canEdit)
+    {
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-secondary">Sửa</a>
+    }
+    <a asp-action="Index" class="btn btn-light">Quay lại danh sách</a>
+
+</div>
