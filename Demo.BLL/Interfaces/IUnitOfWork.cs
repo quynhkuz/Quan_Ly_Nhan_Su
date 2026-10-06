@@ -10,6 +10,7 @@ namespace Demo.BLL.Interfaces
     {
         public IEmployeeRepository EmployeeRepository { get; set; }
         public IDepartmentRepository DepartmentRepository { get; set; }
+        public IPayrollRepository PayrollRepository { get; set; }
 
         int Complete();
 

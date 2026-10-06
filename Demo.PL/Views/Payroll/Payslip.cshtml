@@ -1,0 +1,74 @@
+@model PayslipViewModel
+
+@{
+    ViewData["Title"] = $"Phiếu lương - {Model.EmployeeName}";
+    var canEdit = User.CanEditContent();
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header text-center">
+                <h3 class="mb-0">PHIẾU LƯƠNG</h3>
+                <div>Kỳ lương: @Model.PeriodName</div>
+            </div>
+            <div class="card-body">
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <p><strong>Họ và tên:</strong> @Model.EmployeeName</p>
+                        <p><strong>Mã nhân viên:</strong> @Model.EmployeeId</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p><strong>Phòng ban:</strong> @Model.DepartmentName</p>
+                        <p><strong>Kỳ lương:</strong> @Model.PeriodName</p>
+                    </div>
+                </div>
+
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr>
+                            <td>Lương cơ bản</td>
+                            <td class="text-right">@Model.BaseSalary.ToString("N0") đ</td>
+                        </tr>
+                        <tr>
+                            <td>Phụ cấp</td>
+                            <td class="text-right">@Model.Allowance.ToString("N0") đ</td>
+                        </tr>
+                        <tr>
+                            <td>Thưởng</td>
+                            <td class="text-right">@Model.Bonus.ToString("N0") đ</td>
+                        </tr>
+                        <tr class="table-warning">
+                            <td>Khấu trừ</td>
+                            <td class="text-right">- @Model.Deduction.ToString("N0") đ</td>
+                        </tr>
+                        <tr class="table-warning">
+                            <td>Thuế</td>
+                            <td class="text-right">- @Model.Tax.ToString("N0") đ</td>
+                        </tr>
+                        <tr class="table-success">
+                            <th>Lương thực nhận</th>
+                            <th class="text-right">@Model.NetSalary.ToString("N0") đ</th>
+                        </tr>
+                    </tbody>
+                </table>
+
+                @if (!string.IsNullOrEmpty(Model.Note))
+                {
+                    <p class="text-muted"><strong>Ghi chú:</strong> @Model.Note</p>
+                }
+            </div>
+            <div class="card-footer text-right">
+                <a asp-action="Details" asp-route-id="@Model.PayrollPeriodId" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i> Quay lại bảng lương
+                </a>
+                @if (canEdit)
+                {
+                    <a asp-action="EditPayslip" asp-route-id="@Model.Id" class="btn btn-success">
+                        <i class="fas fa-edit"></i> Điều chỉnh
+                    </a>
+                }
+            </div>
+        </div>
+    </div>
+</div>

@@ -24,5 +24,7 @@ namespace Demo.DAL.Data.Context
         }
         public DbSet<Department> Departments { get; set; }
         public DbSet<Employee> Employees { get; set; }
+        public DbSet<PayrollPeriod> PayrollPeriods { get; set; }
+        public DbSet<Payslip> Payslips { get; set; }
     }
 }

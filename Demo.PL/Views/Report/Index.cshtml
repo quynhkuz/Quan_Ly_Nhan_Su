@@ -1,0 +1,145 @@
+@model ReportViewModel
+
+@{
+    ViewData["Title"] = "Báo cáo lương";
+    var canEdit = User.CanEditContent();
+}
+
+<h1>Báo cáo lương</h1>
+
+@if (Model.Filter.Periods.Any())
+{
+    <form asp-action="Index" method="get" class="mb-4">
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <label for="payrollPeriodId">Kỳ lương</label>
+                <select id="payrollPeriodId" name="payrollPeriodId" class="form-control"
+                        asp-items="@(new SelectList(Model.Filter.Periods, "Id", "Name", Model.Filter.PayrollPeriodId))">
+                </select>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="departmentId">Phòng ban</label>
+                @{
+                    var deptItems = new List<SelectListItem>
+                    {
+                        new SelectListItem("Tất cả phòng ban", "")
+                    };
+                    deptItems.AddRange(Model.Filter.Departments.Select(D => new SelectListItem
+                    {
+                        Text = D.Name,
+                        Value = D.Id.ToString(),
+                        Selected = Model.Filter.DepartmentId == D.Id
+                    }));
+                }
+                <select id="departmentId" name="departmentId" class="form-control"
+                        asp-items="deptItems">
+                </select>
+            </div>
+            <div class="form-group col-md-3 d-flex align-items-end">
+                <button type="submit" class="btn btn-primary mr-2">
+                    <i class="fas fa-filter"></i> Lọc
+                </button>
+                @if (canEdit)
+                {
+                    <a asp-action="ExportExcel"
+                       asp-route-payrollPeriodId="@Model.Filter.PayrollPeriodId"
+                       asp-route-departmentId="@Model.Filter.DepartmentId"
+                       class="btn btn-success">
+                        <i class="fas fa-file-excel"></i> Xuất Excel
+                    </a>
+                }
+            </div>
+        </div>
+    </form>
+
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h6 class="text-muted">Kỳ lương</h6>
+                    <h4 class="mb-0">@Model.PeriodName</h4>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h6 class="text-muted">Phòng ban</h6>
+                    <h4 class="mb-0">@Model.DepartmentName</h4>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h6 class="text-muted">Số nhân viên</h6>
+                    <h4 class="mb-0">@Model.EmployeeCount</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @if (Model.Payslips.Any())
+    {
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>@Html.DisplayNameFor(M => M.Payslips.First().EmployeeName)</th>
+                    <th>@Html.DisplayNameFor(M => M.Payslips.First().DepartmentName)</th>
+                    <th>@Html.DisplayNameFor(M => M.Payslips.First().BaseSalary)</th>
+                    <th>@Html.DisplayNameFor(M => M.Payslips.First().Allowance)</th>
+                    <th>@Html.DisplayNameFor(M => M.Payslips.First().Bonus)</th>
+                    <th>@Html.DisplayNameFor(M => M.Payslips.First().Deduction)</th>
+                    <th>@Html.DisplayNameFor(M => M.Payslips.First().Tax)</th>
+                    <th>@Html.DisplayNameFor(M => M.Payslips.First().NetSalary)</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var payslip in Model.Payslips)
+                {
+                    <tr>
+                        <td>@payslip.EmployeeName</td>
+                        <td>@payslip.DepartmentName</td>
+                        <td>@payslip.BaseSalary.ToString("N0")</td>
+                        <td>@payslip.Allowance.ToString("N0")</td>
+                        <td>@payslip.Bonus.ToString("N0")</td>
+                        <td>@payslip.Deduction.ToString("N0")</td>
+                        <td>@payslip.Tax.ToString("N0")</td>
+                        <td><strong>@payslip.NetSalary.ToString("N0")</strong></td>
+                        <td>
+                            <a asp-controller="Payroll" asp-action="Payslip" asp-route-id="@payslip.Id"
+                               class="btn btn-info btn-sm">
+                                <i class="fas fa-receipt"></i> Phiếu lương
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+            <tfoot>
+                <tr class="table-dark">
+                    <th colspan="2">Tổng cộng (@Model.EmployeeCount NV)</th>
+                    <th>@Model.TotalBaseSalary.ToString("N0")</th>
+                    <th>@Model.TotalAllowance.ToString("N0")</th>
+                    <th>@Model.TotalBonus.ToString("N0")</th>
+                    <th>@Model.TotalDeduction.ToString("N0")</th>
+                    <th>@Model.TotalTax.ToString("N0")</th>
+                    <th>@Model.TotalNetSalary.ToString("N0") đ</th>
+                    <th></th>
+                </tr>
+            </tfoot>
+        </table>
+    }
+    else
+    {
+        <div class="alert alert-warning">Không có dữ liệu lương cho kỳ lương này.</div>
+    }
+}
+else
+{
+    <div class="mt-4 alert alert-warning">
+        <h3>Chưa có kỳ lương</h3>
+        <p>Hãy tính lương trước khi xem báo cáo.</p>
+        <a asp-controller="Payroll" asp-action="Create" class="btn btn-primary">Tính lương</a>
+    </div>
+}

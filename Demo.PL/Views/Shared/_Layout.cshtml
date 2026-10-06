@@ -29,6 +29,12 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Employee" asp-action="Index">Nhân viên</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Payroll" asp-action="Index">Bảng lương</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Report" asp-action="Index">Báo cáo</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Index">Người dùng</a>
                         </li>
                         <li class="nav-item ml-auto">
@@ -58,5 +64,6 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("ValidationScriptSection", required: false)
+    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

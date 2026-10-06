@@ -14,12 +14,14 @@ namespace Demo.BLL.Reopsitories
 
         public IEmployeeRepository EmployeeRepository { get; set; }
         public IDepartmentRepository DepartmentRepository { get; set; }
+        public IPayrollRepository PayrollRepository { get; set; }
 
         public UnitOfWork(AppDbContext dbContext)
         {
             _dbContext = dbContext; 
             EmployeeRepository = new EmployeeRepository(_dbContext);
             DepartmentRepository = new DepartmentRepository(_dbContext);
+            PayrollRepository = new PayrollRepository(_dbContext);
         }
         public int Complete()
         {

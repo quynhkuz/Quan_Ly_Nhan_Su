@@ -1,0 +1,73 @@
+@model IEnumerable<PayrollPeriodViewModel>
+
+@{
+    ViewData["Title"] = "Kỳ lương";
+    var canEdit = User.CanEditContent();
+}
+
+<h1>Danh sách kỳ lương</h1>
+
+<br />
+
+@if (canEdit)
+{
+    <a asp-action="Create" class="btn btn-primary">
+        <i class="fas fa-calculator"></i> Tính lương mới
+    </a>
+    <br />
+    <br />
+}
+
+@if (Model.Any())
+{
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(M => M.Name)</th>
+                <th>@Html.DisplayNameFor(M => M.Status)</th>
+                <th>@Html.DisplayNameFor(M => M.EmployeeCount)</th>
+                <th>@Html.DisplayNameFor(M => M.TotalNetSalary)</th>
+                <th>@Html.DisplayNameFor(M => M.CreatedDate)</th>
+                <th>@Html.DisplayNameFor(M => M.ClosedDate)</th>
+                <th>Thao tác</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var period in Model)
+            {
+                <tr>
+                    <td>@period.Name</td>
+                    <td>
+                        @if (period.Status == PayrollStatus.Closed)
+                        {
+                            <span class="badge badge-success">Đã chốt</span>
+                        }
+                        else
+                        {
+                            <span class="badge badge-warning">Nháp</span>
+                        }
+                    </td>
+                    <td>@period.EmployeeCount</td>
+                    <td>@period.TotalNetSalary.ToString("N0") đ</td>
+                    <td>@period.CreatedDate.ToString("dd/MM/yyyy")</td>
+                    <td>@(period.ClosedDate?.ToString("dd/MM/yyyy") ?? "-")</td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@period.Id" class="btn btn-warning btn-sm">
+                            <i class="fas fa-list"></i> Bảng lương
+                        </a>
+                        <a asp-action="ExportExcel" asp-route-id="@period.Id" class="btn btn-success btn-sm">
+                            <i class="fas fa-file-excel"></i> Excel
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="mt-4 alert alert-warning">
+        <h3>Chưa có kỳ lương nào</h3>
+        <p>Bấm "Tính lương mới" để tính lương cho tất cả nhân viên đang làm việc.</p>
+    </div>
+}

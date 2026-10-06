@@ -1,0 +1,99 @@
+@model CreatePayrollViewModel
+
+@{
+    ViewData["Title"] = "Tính lương";
+}
+
+<h1>Tính lương</h1>
+
+<hr />
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Create" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label asp-for="Month" class="control-label"></label>
+                    <select asp-for="Month" class="form-control">
+                        @for (var m = 1; m <= 12; m++)
+                        {
+                            if (m == Model.Month)
+                            {
+                                <option value="@m" selected>Tháng @m</option>
+                            }
+                            else
+                            {
+                                <option value="@m">Tháng @m</option>
+                            }
+                        }
+                    </select>
+                    <span asp-validation-for="Month" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-6">
+                    <label asp-for="Year" class="control-label"></label>
+                    <input asp-for="Year" class="form-control" />
+                    <span asp-validation-for="Year" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="AllowancePercent" class="control-label"></label>
+                <input asp-for="AllowancePercent" class="form-control" />
+                <span asp-validation-for="AllowancePercent" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="BonusPercent" class="control-label"></label>
+                <input asp-for="BonusPercent" class="form-control" />
+                <span asp-validation-for="BonusPercent" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="DeductionPercent" class="control-label"></label>
+                <input asp-for="DeductionPercent" class="form-control" />
+                <span asp-validation-for="DeductionPercent" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="TaxPercent" class="control-label"></label>
+                <input asp-for="TaxPercent" class="form-control" />
+                <span asp-validation-for="TaxPercent" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-calculator"></i> Tính lương
+                </button>
+                <a asp-action="Index" class="btn btn-secondary">Quay lại</a>
+            </div>
+        </form>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Công thức tính</h5>
+            </div>
+            <div class="card-body">
+                <ul class="mb-0">
+                    <li><strong>Phụ cấp</strong> = Lương cơ bản &times; Phụ cấp (%)</li>
+                    <li><strong>Thưởng</strong> = Lương cơ bản &times; Thưởng (%)</li>
+                    <li><strong>Khấu trừ</strong> = Lương cơ bản &times; Khấu trừ (%)</li>
+                    <li><strong>Thuế</strong> = (Lương + Phụ cấp + Thưởng &minus; Khấu trừ) &times; Thuế (%)</li>
+                    <li><strong>Thực nhận</strong> = Lương + Phụ cấp + Thưởng &minus; Khấu trừ &minus; Thuế</li>
+                </ul>
+                <hr />
+                <p class="mb-0 text-muted">
+                    Chỉ tính lương cho nhân viên đang làm việc.
+                    Kỳ lương tạo ở trạng thái <strong>Nháp</strong>, có thể điều chỉnh trước khi chốt.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section ValidationScriptSection {
+    <partial name="_ValidationScriptsPartial" />
+}
