@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Demo.BLL.Interfaces;
 using Demo.DAL.Models;
+using Demo.PL.Helpers;
 using Demo.PL.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -47,7 +48,7 @@ namespace Demo.PL.Controllers
                 LatestPeriods = _mapper.Map<IEnumerable<PayrollPeriod>, IEnumerable<PayrollPeriodViewModel>>(periods.Take(5)),
                 SalaryByDepartment = departments.Select(D => new DepartmentSalaryStat
                 {
-                    DepartmentName = D.Name,
+                    DepartmentName = DisplayNames.Department(D.Name),
                     EmployeeCount = employees.Count(E => E.DepartmentId == D.Id && !E.IsDeleted),
                     TotalSalary = employees
                         .Where(E => E.DepartmentId == D.Id && !E.IsDeleted)

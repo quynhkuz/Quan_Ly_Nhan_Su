@@ -34,7 +34,19 @@ namespace Demo.PL
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
+            services.AddControllersWithViews(options =>
+            {
+                options.ModelBindingMessageProvider.SetValueMustBeANumberAccessor(name => $"Trường {name} phải là số.");
+                options.ModelBindingMessageProvider.SetNonPropertyValueMustBeANumberAccessor(() => "Giá trị phải là số.");
+                options.ModelBindingMessageProvider.SetValueIsInvalidAccessor(value => $"Giá trị '{value}' không hợp lệ.");
+                options.ModelBindingMessageProvider.SetAttemptedValueIsInvalidAccessor((value, name) => $"Giá trị '{value}' không hợp lệ cho trường {name}.");
+                options.ModelBindingMessageProvider.SetUnknownValueIsInvalidAccessor(name => $"Giá trị của trường {name} không hợp lệ.");
+                options.ModelBindingMessageProvider.SetNonPropertyUnknownValueIsInvalidAccessor(() => "Giá trị không hợp lệ.");
+                options.ModelBindingMessageProvider.SetValueMustNotBeNullAccessor(name => $"Trường {name} không được để trống.");
+                options.ModelBindingMessageProvider.SetMissingBindRequiredValueAccessor(name => $"Thiếu giá trị của trường {name}.");
+                options.ModelBindingMessageProvider.SetMissingKeyOrValueAccessor(() => "Thiếu giá trị.");
+                options.ModelBindingMessageProvider.SetMissingRequestBodyRequiredValueAccessor(() => "Thiếu dữ liệu trong yêu cầu.");
+            });
             services.AddDbContext<AppDbContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));

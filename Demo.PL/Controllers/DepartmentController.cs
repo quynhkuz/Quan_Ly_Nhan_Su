@@ -33,6 +33,7 @@ namespace Demo.PL.Controllers
 
         [HttpPost]
         [Authorize(Roles = Roles.CanEditContent)]
+        [ValidateAntiForgeryToken]
         public IActionResult Create(Department department)
         {
             if (ModelState.IsValid)

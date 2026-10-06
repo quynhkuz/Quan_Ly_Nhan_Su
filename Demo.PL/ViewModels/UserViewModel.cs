@@ -26,7 +26,7 @@ namespace Demo.PL.ViewModels
 		public string Email { get; set; }
 
 		[Display(Name = "Số điện thoại")]
-		[Phone]
+		[Phone(ErrorMessage = "Số điện thoại không hợp lệ")]
 		public string PhoneNumber { get; set; }
 
 		[Display(Name = "Vai trò")]

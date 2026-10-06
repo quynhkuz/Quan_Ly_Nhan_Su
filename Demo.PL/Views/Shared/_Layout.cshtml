@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Quản Lý Nhân Viên</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
@@ -18,24 +18,28 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    @{
+                        var currentController = ViewContext.RouteData.Values["controller"] as string;
+                        Func<string, string> isActive = c => string.Equals(currentController, c, StringComparison.OrdinalIgnoreCase) ? "active" : "";
+                    }
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Trang chủ</a>
+                            <a class="nav-link text-dark @isActive("Home")" asp-area="" asp-controller="Home" asp-action="Index">Trang chủ</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Department" asp-action="Index">Phòng ban</a>
+                            <a class="nav-link text-dark @isActive("Department")" asp-area="" asp-controller="Department" asp-action="Index">Phòng ban</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Employee" asp-action="Index">Nhân viên</a>
+                            <a class="nav-link text-dark @isActive("Employee")" asp-area="" asp-controller="Employee" asp-action="Index">Nhân viên</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Payroll" asp-action="Index">Bảng lương</a>
+                            <a class="nav-link text-dark @isActive("Payroll")" asp-area="" asp-controller="Payroll" asp-action="Index">Bảng lương</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Report" asp-action="Index">Báo cáo</a>
+                            <a class="nav-link text-dark @isActive("Report")" asp-area="" asp-controller="Report" asp-action="Index">Báo cáo</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Index">Người dùng</a>
+                            <a class="nav-link text-dark @isActive("User")" asp-area="" asp-controller="User" asp-action="Index">Người dùng</a>
                         </li>
                         <li class="nav-item ml-auto">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="SignOut">Đăng xuất</a>
@@ -57,7 +61,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            Bài tập môn Lập trình Web - ASP.NET Core MVC &copy; 2026
+            Bài tập môn Lập trình Web
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

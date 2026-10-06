@@ -26,6 +26,7 @@ namespace Demo.PL.ViewModels
 
         [Display(Name = "Lương")]
         [DataType(DataType.Currency)]
+        [Required(ErrorMessage = "{0} là bắt buộc")]
         public decimal Salary { get; set; }
 
 
@@ -37,10 +38,11 @@ namespace Demo.PL.ViewModels
         public string Email { get; set; }
 
         [Display(Name = "Số điện thoại")]
-        [Phone]
+        [Phone(ErrorMessage = "Số điện thoại không hợp lệ")]
         public string PhoneNumber { get; set; }
 
         [Display(Name = "Ngày vào làm")]
+        [Required(ErrorMessage = "{0} là bắt buộc")]
         public DateTime HiringDate { get; set; }
 
         [Display(Name = "Ảnh")]

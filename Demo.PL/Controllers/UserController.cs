@@ -115,7 +115,7 @@ namespace Demo.PL.Controllers
 
 			if (result.Succeeded)
 			{
-				await _userManager.AddToRoleAsync(user, Helpers.Roles.Admin);
+				await _userManager.AddToRoleAsync(user, model.Role);
 				return RedirectToAction(nameof(Index));
 			}
 
@@ -194,7 +194,7 @@ namespace Demo.PL.Controllers
 			if (!currentRoles.Contains(model.Role))
 			{
 				await _userManager.RemoveFromRolesAsync(user, currentRoles);
-				await _userManager.AddToRoleAsync(user, Helpers.Roles.Admin);
+				await _userManager.AddToRoleAsync(user, model.Role);
 			}
 
 			if (isSelf)
@@ -259,7 +259,10 @@ namespace Demo.PL.Controllers
 		private async Task FillRolesViewData()
 		{
 			ViewBag.RolesList = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(
-				_roleManager.Roles.Select(r => r.Name).ToList());
+				_roleManager.Roles
+					.Select(r => new { Value = r.Name, Text = DisplayNames.Role(r.Name) })
+					.ToList(),
+				"Value", "Text");
 		}
     }
 }

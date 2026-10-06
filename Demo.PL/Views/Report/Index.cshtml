@@ -26,7 +26,7 @@
                     };
                     deptItems.AddRange(Model.Filter.Departments.Select(D => new SelectListItem
                     {
-                        Text = D.Name,
+                        Text = DisplayNames.Department(D.Name),
                         Value = D.Id.ToString(),
                         Selected = Model.Filter.DepartmentId == D.Id
                     }));

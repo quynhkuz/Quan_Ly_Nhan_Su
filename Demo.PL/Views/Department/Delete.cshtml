@@ -14,7 +14,8 @@
     </div>
     <div class="form-group">
         <label class="col-form-lable" asp-for="Name"></label>
-        <input asp-for="Name" class="form-control" readonly />
+        <input type="hidden" name="Name" value="@Model.Name" />
+        <input id="Name" class="form-control" readonly value="@DisplayNames.Department(Model.Name)" />
 
     </div>
     <div class="form-group">

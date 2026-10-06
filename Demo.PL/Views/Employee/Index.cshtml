@@ -74,7 +74,7 @@
                     </td>
                     <td>@employee.Age</td>
                     <td>@employee.Address</td>
-                    <td>@employee.Department?.Name</td>
+                    <td>@DisplayNames.Department(employee.Department?.Name)</td>
                     <td>@Html.DisplayFor(M => employee.Salary)</td>
                     <td>@Html.DisplayFor(M=> employee.IsActive)</td>
                     <td>@Html.DisplayFor(M => employee.Email)</td>

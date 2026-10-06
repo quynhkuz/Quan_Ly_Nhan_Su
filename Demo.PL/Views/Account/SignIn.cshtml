@@ -13,7 +13,7 @@
 			<br/>
 			<div class="wthree-text">
 				<label class="anim">
-					<input asp-for="RememberMe" class="checkbox">
+					<input type="checkbox" class="checkbox" id="RememberMe" name="RememberMe" value="true" @(Model?.RememberMe == true ? "checked" : "")>
 					<span>Ghi nhớ đăng nhập</span>
 				</label>
 				<div class="clear"> </div>

@@ -34,7 +34,7 @@
 
 </div>
 <div class="form-check">
-    <input asp-for="IsActive" class="form-check-input" readonly />
+    <input type="checkbox" class="form-check-input" id="IsActive" name="IsActive" value="true" @(Model?.IsActive == true ? "checked" : "") readonly />
     <label class="form-check-label" asp-for="IsActive" ></label>   
 
 </div>

@@ -40,26 +40,32 @@ namespace Demo.PL.ViewModels
     public class CreatePayrollViewModel
     {
         [Display(Name = "Tháng")]
+        [Required(ErrorMessage = "{0} là bắt buộc")]
         [Range(1, 12, ErrorMessage = "Tháng phải từ 1 đến 12")]
         public int Month { get; set; } = DateTime.Now.Month;
 
         [Display(Name = "Năm")]
+        [Required(ErrorMessage = "{0} là bắt buộc")]
         [Range(2020, 2100, ErrorMessage = "Năm phải từ 2020 đến 2100")]
         public int Year { get; set; } = DateTime.Now.Year;
 
         [Display(Name = "Phụ cấp (%)")]
+        [Required(ErrorMessage = "{0} là bắt buộc")]
         [Range(0, 100, ErrorMessage = "Phụ cấp phải từ 0 đến 100%")]
         public decimal AllowancePercent { get; set; } = 10;
 
         [Display(Name = "Thưởng (%)")]
+        [Required(ErrorMessage = "{0} là bắt buộc")]
         [Range(0, 100, ErrorMessage = "Thưởng phải từ 0 đến 100%")]
         public decimal BonusPercent { get; set; } = 0;
 
         [Display(Name = "Khấu trừ - BHXH, BHYT (%)")]
+        [Required(ErrorMessage = "{0} là bắt buộc")]
         [Range(0, 100, ErrorMessage = "Khấu trừ phải từ 0 đến 100%")]
         public decimal DeductionPercent { get; set; } = 10.5m;
 
         [Display(Name = "Thuế TNCN (%)")]
+        [Required(ErrorMessage = "{0} là bắt buộc")]
         [Range(0, 100, ErrorMessage = "Thuế phải từ 0 đến 100%")]
         public decimal TaxPercent { get; set; } = 10;
     }
@@ -118,7 +124,12 @@ namespace Demo.PL.ViewModels
 
     public class EditPayslipViewModel
     {
+        [Display(Name = "Mã phiếu lương")]
+        [Required(ErrorMessage = "{0} là bắt buộc")]
         public int Id { get; set; }
+
+        [Display(Name = "Kỳ lương")]
+        [Required(ErrorMessage = "{0} là bắt buộc")]
         public int PayrollPeriodId { get; set; }
 
         [Display(Name = "Họ và tên")]
@@ -126,30 +137,35 @@ namespace Demo.PL.ViewModels
 
         [Display(Name = "Lương cơ bản")]
         [DataType(DataType.Currency)]
+        [Required(ErrorMessage = "{0} là bắt buộc")]
         public decimal BaseSalary { get; set; }
 
         [Display(Name = "Phụ cấp")]
         [DataType(DataType.Currency)]
+        [Required(ErrorMessage = "{0} là bắt buộc")]
         [Range(0, 1000000000, ErrorMessage = "Phụ cấp không hợp lệ")]
         public decimal Allowance { get; set; }
 
         [Display(Name = "Thưởng")]
         [DataType(DataType.Currency)]
+        [Required(ErrorMessage = "{0} là bắt buộc")]
         [Range(0, 1000000000, ErrorMessage = "Thưởng không hợp lệ")]
         public decimal Bonus { get; set; }
 
         [Display(Name = "Khấu trừ")]
         [DataType(DataType.Currency)]
+        [Required(ErrorMessage = "{0} là bắt buộc")]
         [Range(0, 1000000000, ErrorMessage = "Khấu trừ không hợp lệ")]
         public decimal Deduction { get; set; }
 
         [Display(Name = "Thuế")]
         [DataType(DataType.Currency)]
+        [Required(ErrorMessage = "{0} là bắt buộc")]
         [Range(0, 1000000000, ErrorMessage = "Thuế không hợp lệ")]
         public decimal Tax { get; set; }
 
         [Display(Name = "Ghi chú")]
-        [MaxLength(250)]
+        [MaxLength(250, ErrorMessage = "Ghi chú không được vượt quá 250 ký tự")]
         public string Note { get; set; }
     }
 }

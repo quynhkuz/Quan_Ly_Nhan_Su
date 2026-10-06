@@ -18,6 +18,7 @@ namespace Demo.DAL.Models
         public string Name { get; set; }
 
         [Display(Name = "Ngày tạo")]
+        [Required(ErrorMessage = "{0} là bắt buộc")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime DateOfCreation { get; set; }

@@ -3,7 +3,10 @@
 @inject IUnitOfWork _unitOfWork
 
 @{
-    var departments = new SelectList(_unitOfWork.DepartmentRepository.GetAll(), nameof(Department.Id), nameof(Department.Name));
+    var departments = new SelectList(
+        _unitOfWork.DepartmentRepository.GetAll()
+            .Select(D => new { D.Id, Name = DisplayNames.Department(D.Name) }),
+        "Id", "Name");
 
 }
 
@@ -38,7 +41,7 @@
 
 </div>
 <div class="form-check">
-    <input asp-for="IsActive" class="form-check-input" />
+    <input type="checkbox" class="form-check-input" id="IsActive" name="IsActive" value="true" @(Model?.IsActive == true ? "checked" : "") />
     <label class="form-check-label" asp-for="IsActive"></label>
 </div>
 <div class="form-group">

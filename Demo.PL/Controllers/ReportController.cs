@@ -55,7 +55,7 @@ namespace Demo.PL.Controllers
             if (departmentId.HasValue)
             {
                 payslips = payslips.Where(S => S.Employee.DepartmentId == departmentId.Value);
-                departmentName = departments.FirstOrDefault(D => D.Id == departmentId.Value)?.Name ?? "Không xác định";
+                departmentName = DisplayNames.Department(departments.FirstOrDefault(D => D.Id == departmentId.Value)?.Name) ?? "Không xác định";
             }
 
             var list = payslips.ToList();
@@ -114,7 +114,7 @@ namespace Demo.PL.Controllers
             {
                 S.EmployeeId,
                 S.Employee?.Name ?? "",
-                S.Employee?.Department?.Name ?? "",
+                DisplayNames.Department(S.Employee?.Department?.Name) ?? "",
                 S.BaseSalary,
                 S.Allowance,
                 S.Bonus,

@@ -285,7 +285,7 @@ namespace Demo.PL.Controllers
                 {
                     S.EmployeeId,
                     S.Employee?.Name ?? "",
-                    S.Employee?.Department?.Name ?? "",
+                    DisplayNames.Department(S.Employee?.Department?.Name) ?? "",
                     S.BaseSalary,
                     S.Allowance,
                     S.Bonus,

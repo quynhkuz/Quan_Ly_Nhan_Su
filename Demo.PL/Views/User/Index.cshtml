@@ -67,7 +67,7 @@
                     <td>@Html.DisplayFor(M => user.LName)</td>
                     <td>@Html.DisplayFor(M => user.Email)</td>
                     <td>@Html.DisplayFor(M => user.PhoneNumber)</td>
-                    <td>@string.Join(", ", user.Roles)</td>
+                    <td>@string.Join(", ", user.Roles.Select(DisplayNames.Role))</td>
 
                     <td>
                         <a asp-action="Details" asp-route-id="@user.Id" class="btn btn-warning">

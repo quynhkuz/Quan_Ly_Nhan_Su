@@ -30,6 +30,7 @@ namespace Demo.PL.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> SignUp(SignUpViewModel model)
         { 
             if(ModelState.IsValid)
@@ -76,6 +77,7 @@ namespace Demo.PL.Controllers
 
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> SignIn(SignInViewModel model)
         {
             if (ModelState.IsValid)
@@ -83,15 +85,17 @@ namespace Demo.PL.Controllers
                 var user = await _userManager.FindByEmailAsync(model.Email);
                 if (user is not null)
                 {
-                    var flag = await _userManager.CheckPasswordAsync(user, model.Password);
-                    if (flag)
+                    var result = await _signInManager.PasswordSignInAsync(user, model.Password, model.RememberMe, lockoutOnFailure: true);
+                    if (result.Succeeded)
                     {
-                        var result = await _signInManager.PasswordSignInAsync(user, model.Password, model.RememberMe, false);
-                        if (result.Succeeded)
-                        {
-							return RedirectToAction(nameof(HomeController.Index), "Home");
-						}
-					}
+                        return RedirectToAction(nameof(HomeController.Index), "Home");
+                    }
+
+                    if (result.IsLockedOut)
+                    {
+                        ModelState.AddModelError(string.Empty, "Tài khoản đã bị khoá do đăng nhập sai quá nhiều lần. Vui lòng thử lại sau.");
+                        return View(model);
+                    }
                 }
                 ModelState.AddModelError(string.Empty, "Email hoặc mật khẩu không đúng");
             }
@@ -118,6 +122,7 @@ namespace Demo.PL.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> SendResetPasswordURL(ForgetPasswordViewModel model)
         {
             if (ModelState.IsValid)
@@ -131,7 +136,7 @@ namespace Demo.PL.Controllers
 
                     var email = new Email()
                     {
-                        Subject = "Reset Your Password",
+                        Subject = "Đặt lại mật khẩu",
                         Recipients = user.Email,
                         Body = resetPasswordUrl
                     };
@@ -170,6 +175,7 @@ namespace Demo.PL.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> ResetPassword(ResetPasswordViewModel model)
         {
             if (ModelState.IsValid)
