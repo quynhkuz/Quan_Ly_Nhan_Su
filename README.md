@@ -1,4 +1,4 @@
-# Bài tập môn Lập trình Web — Hệ thống quản lý nhân viên & bảng lương
+# Bài tập môn Lập trình Web — Hệ thống quản lý nhân sự
 
 **Hệ thống quản lý nhân viên, phòng ban và tính lương** được xây dựng bằng **ASP.NET Core MVC**,
 lưu dữ liệu trên **Microsoft SQL Server**, theo **kiến trúc 3 tầng** (PL – BLL – DAL)
@@ -82,7 +82,6 @@ MVC03 Soluation.sln
   - Email bắt buộc duy nhất (`RequireUniqueEmail`);
   - **Khóa tài khoản 10 phút** sau **3 lần** đăng nhập sai.
 - **Trang từ chối truy cập:** `/Account/AccessDenied` (người dùng không đủ quyền).
-- Lỗi Identity hiển thị tiếng Việt qua `VietnameseIdentityErrorDescriber`.
 
 ### 3.2. Bảng điều khiển — Dashboard (`HomeController`)
 
@@ -126,7 +125,6 @@ Yêu cầu đăng nhập. Các chỉ số hiển thị:
 - **Xoá mềm:** đặt `IsDeleted = true`, nhân viên bị xoá không tham gia tính lương và thống kê.
 - **Dữ liệu hợp lệ khi tính lương:** nhân viên `IsActive = true` và `IsDeleted = false`.
 - Kiểm tra `DepartmentId` có tồn tại trước khi lưu ("Phòng ban không tồn tại.").
-- Tên phòng ban hiển thị tiếng Việt; nhãn hiển thị theo `[Display(Name = "...")]` (tiếng Việt).
 
 ### 3.5. Bảng lương (`PayrollController`)
 
@@ -300,8 +298,6 @@ Bảng `__EFMigrationsHistory` lưu lịch sử migration.
 | Payslips        | 5 (cho 5 nhân viên đang làm, tổng quỹ 99.495.000 ₫) |
 | AspNetUsers     | 5 (2 Admin, 1 Editor, 2 User) |
 
-> **Lưu ý:** database còn tồn tại 3 bảng dư từ giai đoạn trước của đồ án
-> (`Positions`, `AttendanceRecords`, `LeaveRequests`) — mã nguồn hiện tại **không dùng đến**.
 
 ### 4.4. Lịch sử Migration (EF Core Code First)
 
@@ -347,7 +343,7 @@ Trong `Demo.PL/appsettings.json`:
 }
 ```
 
-Đổi `Server`, `User Id`, `Password` nếu môi trường của bạn khác.
+Đổi `Server`, `User Id`, `Password` nếu môi trường khác.
 
 ### 5.4. Build & chạy
 
@@ -376,8 +372,6 @@ dotnet run --project Demo.PL   # chạy ứng dụng
 | `tung.phung@demo.vn`| User               | Chỉ xem                                     |
 | `tuyen.le@demo.vn`  | User               | Chỉ xem                                     |
 
-- Mọi tài khoản chưa có vai trò nào sẽ được gán `Admin` khi khởi động ứng dụng
-  (xem `Program.cs`).
 
 ### 5.6. Cấu hình email (quên mật khẩu)
 
@@ -423,12 +417,3 @@ docker exec -it mvc-sqlserver /opt/mssql-tools18/bin/sqlcmd -C -S localhost -U s
 
 - Mọi route đều theo mẫu mặc định `{controller=Home}/{action=Index}/{id?}`.
 - Tất cả **POST** đều có `[ValidateAntiForgeryToken]` chống CSRF.
-
----
-
-## 7. Ghi chú
-
-- Tên phòng ban/vai trò hiển thị tiếng Việt nhưng **dữ liệu gốc trong DB giữ nguyên**
-  (không ghi đè tên đã dịch vào form/cơ sở dữ liệu).
-- Nhãn hiển thị (`[Display(Name = "...")]`) và thông báo validation đều bằng tiếng Việt.
-- README này (tiếng Việt) là tài liệu cho bài tập môn Lập trình Web.
