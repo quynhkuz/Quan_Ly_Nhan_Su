@@ -115,7 +115,7 @@ namespace Demo.PL.Controllers
 
 			if (result.Succeeded)
 			{
-				await _userManager.AddToRoleAsync(user, model.Role);
+				await _userManager.AddToRoleAsync(user, Helpers.Roles.Admin);
 				return RedirectToAction(nameof(Index));
 			}
 
@@ -194,7 +194,7 @@ namespace Demo.PL.Controllers
 			if (!currentRoles.Contains(model.Role))
 			{
 				await _userManager.RemoveFromRolesAsync(user, currentRoles);
-				await _userManager.AddToRoleAsync(user, model.Role);
+				await _userManager.AddToRoleAsync(user, Helpers.Roles.Admin);
 			}
 
 			if (isSelf)

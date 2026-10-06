@@ -53,7 +53,10 @@ namespace Demo.PL.Controllers
                     var result = await _userManager.CreateAsync(user, model.Password);
 
                     if (result.Succeeded)
+                    {
+                        await _userManager.AddToRoleAsync(user, Helpers.Roles.Admin);
                         return RedirectToAction(nameof(SignIn));
+                    }
 
                     foreach (var error in result.Errors)
                         ModelState.AddModelError(string.Empty, error.Description);

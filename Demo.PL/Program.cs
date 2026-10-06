@@ -1,3 +1,4 @@
+using Demo.DAL.Data.Context;
 using Demo.DAL.Models;
 using Demo.PL.Helpers;
 using Microsoft.AspNetCore.Hosting;
@@ -33,6 +34,8 @@ namespace Demo.PL
             using var scope = host.Services.CreateScope();
             var services = scope.ServiceProvider;
 
+            services.GetRequiredService<AppDbContext>().Database.Migrate();
+
             var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
             var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
 
@@ -58,12 +61,11 @@ namespace Demo.PL
                 }
             }
 
-            // Tài khoản chưa có quyền nào thì mặc định cấp thấp nhất.
-            // Việc gán quyền Editor/User cho tài khoản khác do Admin thực hiện trên giao diện.
+            // Tất cả tài khoản đăng ký đều là Admin
             foreach (var user in userManager.Users.ToList())
             {
                 if (userManager.GetRolesAsync(user).Result.Count == 0)
-                    _ = userManager.AddToRoleAsync(user, Roles.User).Result;
+                    _ = userManager.AddToRoleAsync(user, Roles.Admin).Result;
             }
         }
 
